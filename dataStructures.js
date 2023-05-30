@@ -243,18 +243,58 @@ let HashTable = function() {
 //Linked List
 /////////////
 
-var Node = function(element) {
-  this.element = element;
-  this.next = null;
-};
-var Kitten = new Node('Kitten');
-var Puppy = new Node('Puppy');
+function LinkedList() {
+  let length = 0;
+  let head = null;
 
-Kitten.next = Puppy;
-// Only change code below this line
+  function Node(element) {
+    this.element = element;
+    this.next = null;
+  }
 
-const Cat = new Node('Cat')
-const Dog = new Node('Dog')
+  this.head = () => head;
 
-Puppy.next = Cat
-Cat.next = Dog
+  this.size = () => length;
+
+  this.add = element => {
+    const node = new Node(element);
+    if (head) {
+      let current = head;
+      while (current.next !== null) {
+        current = current.next;
+      }
+      current.next = node;
+    }
+    else {
+      head = node;
+    }
+    length++;
+  };
+  
+  this.addAt = function(index,element){
+    if(index < 0 || index >= length) return false
+    var node = new Node(element)
+    if (index === 0){
+      node.next = head
+      head = node
+      length++;
+      return
+    }
+    let parentNode = null
+    let currentIndex = 0 
+    let currentNode = head
+    let isFound = false
+    while(!isFound && currentNode){
+      if(index === currentIndex){
+        parentNode.next = node
+        node.next = currentNode
+        isFound = true
+        length++;
+        break
+      }
+      currentIndex++;
+      parentNode = currentNode
+      currentNode = currentNode.next
+    }
+  }
+}
