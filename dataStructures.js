@@ -202,7 +202,7 @@ class Set {
 }
 
 /////////////
-//Set class
+//Hashed Table
 /////////////
 
 let called = 0;
@@ -238,3 +238,23 @@ let HashTable = function() {
   }
   // Only change code above this line
 };
+
+/////////////
+//Linked List
+/////////////
+
+var Node = function(element) {
+  this.element = element;
+  this.next = null;
+};
+var Kitten = new Node('Kitten');
+var Puppy = new Node('Puppy');
+
+Kitten.next = Puppy;
+// Only change code below this line
+
+const Cat = new Node('Cat')
+const Dog = new Node('Dog')
+
+Puppy.next = Cat
+Cat.next = Dog
