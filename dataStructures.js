@@ -126,39 +126,77 @@ class CircularQueue {
 
 class Set {
   constructor() {
-    // Dictionary will hold the items of our set
     this.dictionary = {};
     this.length = 0;
   }
 
-  // This method will check for the presence of an element and return true or false
   has(element) {
     return this.dictionary[element] !== undefined;
   }
 
-  // This method will return all the values in the set
   values() {
-    return Object.values(this.dictionary);
+    return Object.keys(this.dictionary);
   }
 
-  // Only change code below this line
-  add(element){
-    if (!this.has(element)){
-      this.dictionary[element] = element
-      return true
+  add(element) {
+    if (!this.has(element)) {
+      this.dictionary[element] = true;
+      this.length++;
+      return true;
     }
-    return false
+
+    return false;
   }
 
-  remove(element){
-    if (this.has(element)){
-      delete this.dictionary[element]
-      return true
+  remove(element) {
+    if (this.has(element)) {
+      delete this.dictionary[element];
+      this.length--;
+      return true;
     }
-    return false
+
+    return false;
   }
-  size(){
-    return this.values().length
+
+  size() {
+    return this.length;
   }
-  // Only change code above this line
+
+  union(set) {
+    const newSet = new Set();
+    this.values().forEach(value => {
+      newSet.add(value);
+    })
+    set.values().forEach(value => {
+      newSet.add(value);
+    })
+
+    return newSet;
+  }
+
+  intersection(set) {
+    const newSet = new Set();
+    this.values().forEach(value => {
+      if (set.values().includes(value))
+          newSet.add(value);
+    })
+
+    return newSet;
+  }
+
+  difference(set) {
+    const newSet = new Set();
+    this.values().forEach(value => {
+      if (!set.values().includes(value))
+          newSet.add(value);
+    })
+
+    return newSet;
+  }
+
+  isSubsetOf(set) {
+    return this
+      .values()
+      .every(value => set.values().includes(value));
+  }
 }
