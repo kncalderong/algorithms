@@ -298,3 +298,65 @@ function LinkedList() {
     }
   }
 }
+
+
+/////////////
+//Doubled Linked List
+/////////////
+
+var Node = function(data, prev) {
+  this.data = data;
+  this.prev = prev;
+  this.next = null;
+};
+var DoublyLinkedList = function() {
+  this.head = null;
+  this.tail = null;
+  this.length = 0;
+  // Only change code below this line
+  this.add = function(element){
+    let newNode 
+    if(this.head === null){
+      newNode = new Node(element,null)
+      this.head = newNode
+      this.tail = newNode
+      this.length++
+      return newNode
+    }
+    newNode = new Node(element, this.tail)
+    this.tail.next = newNode
+    this.tail = newNode
+    this.length++
+    return newNode
+  }
+
+  this.remove = function(element){
+    if(this.length === 0) return null
+    if(this.head.data === element){
+      this.head = this.head.next
+      this.length--;
+      return
+    }
+    if(this.tail.data === element){
+      let parentTail = this.tail.prev
+      parentTail.next = null
+      this.tail = parentTail
+      this.length--
+      return
+    }
+    let current = this.head
+    while(current !== null){
+      if(current.data === element) break
+      current = current.next
+    }
+    if (current === null) return null
+    const parent = current.prev
+    const child = current.next
+    parent.next = child
+    length--
+    return current
+  }
+  // Only change code above this line
+};
+
+const example = new DoublyLinkedList()
