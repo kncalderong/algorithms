@@ -360,3 +360,150 @@ var DoublyLinkedList = function() {
 };
 
 const example = new DoublyLinkedList()
+
+
+
+/////////////
+//Binary Tree
+/////////////
+
+
+var displayTree = tree => console.log(JSON.stringify(tree, null, 2)); // <---------------- This is a great function to visualize the tree
+function Node(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
+}
+function BinarySearchTree() {
+  this.root = null;
+  // Only change code below this line
+  this.add = function(val){
+    const newNode = new Node(val)
+    if(this.root === null){ 
+      this.root = newNode
+      return undefined
+    }
+    let placeFound = false
+    let currentBranch = this.root
+    while(!placeFound){
+      if(currentBranch.value === val) return null
+      if(currentBranch.left === null && val <= currentBranch.value){
+        currentBranch.left = newNode
+        placeFound = true
+        break
+      }
+      if(currentBranch.right === null && val >= currentBranch.value){
+        currentBranch.right = newNode
+        placeFound = true
+        break
+      }
+      currentBranch = val <= currentBranch.value ? currentBranch.left : currentBranch.right
+    }
+    return undefined
+  }
+  
+  this.findMax = function(){
+    if(this.root === null) return null
+    let maxVal = this.root.value
+    let currentNode = this.root
+    while(currentNode){
+      if(currentNode.right){
+        maxVal = currentNode.right
+      }
+      currentNode = currentNode.right
+    }
+    return maxVal.value
+  }
+  
+  this.findMin = function(){
+    if(this.root === null) return null
+    let minVal = this.root.value
+    let currentNode = this.root
+    while(currentNode){
+      if(currentNode.left){
+        minVal = currentNode.left
+      }
+      currentNode = currentNode.left
+    }
+    return minVal.value
+  }
+  // Only change code above this line
+  
+  this.findHeight = function(){
+    console.log("starting tree ==================")
+
+    let height = [-1]
+    let minHeight = null
+    let maxHeight = null
+    const checkHeight = (node) => {
+      const lastHeight = height[height.length - 1]
+      if (node === null) {
+        if(minHeight === null || (lastHeight + 1)  <= minHeight){
+          minHeight = (lastHeight + 1)
+        }
+        if(maxHeight === null || (lastHeight + 1) >= maxHeight){
+          maxHeight = (lastHeight + 1)
+        }
+        return
+      } 
+      if(node.left || node.right){
+        height.push(lastHeight + 1);
+      }
+      checkHeight(node.left)
+      checkHeight(node.right) 
+    }
+    checkHeight(this.root)
+    console.log("minHeight", minHeight)
+    console.log("maxHeight", maxHeight)
+
+    return height
+  }
+  
+  this.findMinHeight = function(){
+    if(this.root === null) return -1
+    const heights = this.findHeight()
+    console.log("heights: ",heights)
+    if(heights.length > 1) return 0
+  }
+
+  this.findMaxHeight = function(){
+    if(this.root === null) return -1
+    const heights = this.findHeight()
+    console.log("heights: ",heights)
+
+  }
+}
+
+function isBinarySearchTree(tree) {
+  // Only change code below this line
+  function isBinarySubTree(node) {
+    return !node /* empty subtree is always valid */
+           || (
+                /* child values must be in order */
+                (!node.left  || node.left.value   < node.value) &&
+                (!node.right || node.right.value >= node.value) &&
+                /* and child subtrees must be valid */
+                isBinarySubTree(node.left) && isBinarySubTree(node.right)
+              )
+  }
+
+  return isBinarySubTree(tree.root);
+  // Only change code above this line
+}
+
+//this was my solution :') :
+
+function isBinarySearchTree(tree) {
+
+  // Only change code below this line
+  const isValidNode = (node) => {
+    if (node === null) return true
+    if ((node.left !== null && node.left.value >= node.value) || (node.right !== null && node.right.value < node.value) ) return false
+    if (isValidNode(node.left) && isValidNode(node.right)){
+      return true
+    }
+    return false
+  }
+  return isValidNode(tree.root)
+  // Only change code above this line
+}
