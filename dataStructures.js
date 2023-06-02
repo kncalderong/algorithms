@@ -430,8 +430,6 @@ function BinarySearchTree() {
   // Only change code above this line
   
   this.findHeight = function(){
-    console.log("starting tree ==================")
-
     let height = [-1]
     let minHeight = null
     let maxHeight = null
@@ -453,38 +451,41 @@ function BinarySearchTree() {
       checkHeight(node.right) 
     }
     checkHeight(this.root)
-    console.log("minHeight", minHeight)
-    console.log("maxHeight", maxHeight)
-
-    return height
+    return {height, minHeight, maxHeight}
   }
   
   this.findMinHeight = function(){
     if(this.root === null) return -1
-    const heights = this.findHeight()
-    console.log("heights: ",heights)
-    if(heights.length > 1) return 0
+    const {minHeight} = this.findHeight()
+    return minHeight
   }
 
   this.findMaxHeight = function(){
     if(this.root === null) return -1
-    const heights = this.findHeight()
-    console.log("heights: ",heights)
-
+    const {maxHeight} = this.findHeight()
+    return maxHeight
   }
+  
+  this.isBalanced = function(){
+    if(this.root === null) return false
+    const {minHeight, maxHeight} = this.findHeight()
+    if(maxHeight - minHeight >1) return false
+    return true
+  }
+  
 }
 
 function isBinarySearchTree(tree) {
   // Only change code below this line
   function isBinarySubTree(node) {
     return !node /* empty subtree is always valid */
-           || (
-                /* child values must be in order */
-                (!node.left  || node.left.value   < node.value) &&
-                (!node.right || node.right.value >= node.value) &&
-                /* and child subtrees must be valid */
-                isBinarySubTree(node.left) && isBinarySubTree(node.right)
-              )
+    || (
+        /* child values must be in order */
+        (!node.left  || node.left.value   < node.value) &&
+        (!node.right || node.right.value >= node.value) &&
+        /* and child subtrees must be valid */
+        isBinarySubTree(node.left) && isBinarySubTree(node.right)
+      )
   }
 
   return isBinarySubTree(tree.root);
