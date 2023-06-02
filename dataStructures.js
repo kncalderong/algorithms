@@ -473,6 +473,47 @@ function BinarySearchTree() {
     return true
   }
   
+  this.inorder  = function(){
+    if(this.root === null) return null
+    let values = []
+    function getNodeValue(node){
+      if (node === null) return
+      getNodeValue(node.left) //left
+      values.push(node.value) // root
+      getNodeValue(node.right) // right
+    }
+    getNodeValue(this.root)
+    console.log("values: ", values)
+    return values
+  }
+  
+  this.preorder  = function(){
+    if(this.root === null) return null
+    let values = []
+    function getNodeValue(node){
+      if (node === null) return
+      values.push(node.value) // root
+      getNodeValue(node.left) //left
+      getNodeValue(node.right) // right
+    }
+    getNodeValue(this.root)
+    console.log("values: ", values)
+    return values
+  }
+ this.postorder  = function(){
+    if(this.root === null) return null
+    let values = []
+    function getNodeValue(node){
+      if (node === null) return
+      getNodeValue(node.left) //left
+      getNodeValue(node.right) // right
+      values.push(node.value) // root
+    }
+    getNodeValue(this.root)
+    console.log("values: ", values)
+    return values
+  }
+  
 }
 
 function isBinarySearchTree(tree) {
