@@ -589,3 +589,124 @@ function isBinarySearchTree(tree) {
   return isValidNode(tree.root)
   // Only change code above this line
 }
+
+
+///////////////////////////////////////////////////////////
+
+
+//Advance to delete nodes problem in binary tree
+
+var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+function Node(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
+}
+
+///to traverse root by levels: 
+function traverse(direction, root, targetValue) {
+
+  console.log("start of process ==================", targetValue)
+  const queue = [root];
+  let parentsQueue = []
+  let targetNode = undefined;
+  let parent = undefined;
+  let counter = 0
+
+  function pushIfThere(node, queue) {
+    if (node) queue.push(node);
+  }
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+    /* console.log("queue: ", queue)
+    console.log("node: ", node)
+    console.log("parentsQueue: ", parentsQueue)
+    console.log("parent: ", parent)
+    console.log("counter: ", counter) */
+
+    if(counter > 0){
+      if(!isEven(counter)){
+        parent = parentsQueue.shift()
+      }
+    }
+    if(node.left !== null || node.right !== null){
+      parentsQueue.push(node)
+    }
+    
+    if(node.value === targetValue){
+      targetNode = node
+      break
+    }    
+    counter++
+    
+    if (direction === "level") {
+      // Level order: left to right
+      pushIfThere(node.left, queue);
+      pushIfThere(node.right, queue);
+    } else {
+      // Reverse level order: right to left
+      pushIfThere(node.right, queue);
+      pushIfThere(node.left, queue);
+    }
+  }
+  console.log("targetNode Result",targetNode)
+  console.log("parent Result", parent)
+  if(targetNode === undefined) return null
+  return {targetNode, parent};
+}
+
+function isEven(n) {
+   return n % 2 == 0;
+}
+
+function BinarySearchTree() {
+  this.root = null;
+  // Only change code below this line
+  this.find = function(targetValue){
+    if(this.root === null) return null
+    let chain = []
+
+    const itExist = traverse("level", this.root, targetValue);
+    /* while(itExist !== null && itExist.parent !== undefined){
+      chain.push()
+    } */
+  }
+
+  this.remove = function(element){
+    if(this.root === null) return null
+    this.find(element)
+  }
+}
+
+/* start of process ================== 100
+targetNode Result undefined
+parent Result { value: 15,
+  left: null,
+  right: { value: 30, left: null, right: null } }
+start of process ================== 500
+targetNode Result { value: 500, left: null, right: null }
+parent Result undefined
+start of process ================== 3
+targetNode Result { value: 3, left: null, right: null }
+parent Result { value: 5,
+  left: { value: 3, left: null, right: null },
+  right: 
+   { value: 7,
+     left: { value: 6, left: null, right: null },
+     right: { value: 10, left: null, right: [Object] } } }
+start of process ================== 12
+targetNode Result { value: 12, left: null, right: null }
+parent Result { value: 10,
+  left: null,
+  right: { value: 12, left: null, right: null } }
+start of process ================== 10
+targetNode Result { value: 10,
+  left: null,
+  right: { value: 12, left: null, right: null } }
+parent Result { value: 7,
+  left: { value: 6, left: null, right: null },
+  right: 
+   { value: 10,
+     left: null,
+     right: { value: 12, left: null, right: null } } } */
