@@ -5,25 +5,25 @@
 
 function Stack() {
   var collection = [];
-  this.print = function() {
+  this.print = function () {
     console.log(collection);
   };
-  this.push = function(element) {
+  this.push = function (element) {
     collection.push(element)
   }
-  this.pop = function() {
+  this.pop = function () {
     return collection.pop()
   }
-  this.peek = function(){ 
-    return collection[collection.length-1]
+  this.peek = function () {
+    return collection[collection.length - 1]
   }
-  this.isEmpty = function(){
-    if(collection.length === 0){
+  this.isEmpty = function () {
+    if (collection.length === 0) {
       return true
     }
     return false
   }
-  this.clear = function(){
+  this.clear = function () {
     collection = []
   }
 }
@@ -38,13 +38,13 @@ console.log(stackExample.isEmpty())
 //Priority Queue
 /////////////
 
-function PriorityQueue () {
+function PriorityQueue() {
   this.collection = [];
-  this.printCollection = function() {
+  this.printCollection = function () {
     console.log(this.collection);
   };
   // Only change code below this line
-  this.enqueue = function(item) {
+  this.enqueue = function (item) {
     let index = this.collection.findIndex(elem => elem[1] > item[1]);
     if (index !== -1) {
       this.collection.splice(index, 0, item);
@@ -53,19 +53,19 @@ function PriorityQueue () {
     }
   }
 
-  this.dequeue = function() {
+  this.dequeue = function () {
     return this.collection.shift()[0];
   }
 
-  this.size = function() {
+  this.size = function () {
     return this.collection.length;
   }
 
-  this.isEmpty = function() {
+  this.isEmpty = function () {
     return this.size() === 0;
   }
 
-  this.front = function() {
+  this.front = function () {
     return this.collection[0][0];
   }
   // Only change code above this line
@@ -73,7 +73,7 @@ function PriorityQueue () {
 
 const priorityQueueExample = new PriorityQueue()
 
-console.log(priorityQueueExample.dequeue(['bird',5]))
+console.log(priorityQueueExample.dequeue(['bird', 5]))
 
 
 /////////////
@@ -178,7 +178,7 @@ class Set {
     const newSet = new Set();
     this.values().forEach(value => {
       if (set.values().includes(value))
-          newSet.add(value);
+        newSet.add(value);
     })
 
     return newSet;
@@ -188,7 +188,7 @@ class Set {
     const newSet = new Set();
     this.values().forEach(value => {
       if (!set.values().includes(value))
-          newSet.add(value);
+        newSet.add(value);
     })
 
     return newSet;
@@ -216,7 +216,7 @@ let hash = string => {
   return hashed;
 };
 
-let HashTable = function() {
+let HashTable = function () {
   this.collection = {};
   // Only change code below this line
   this.add = (key, value) => {
@@ -270,22 +270,22 @@ function LinkedList() {
     }
     length++;
   };
-  
-  this.addAt = function(index,element){
-    if(index < 0 || index >= length) return false
+
+  this.addAt = function (index, element) {
+    if (index < 0 || index >= length) return false
     var node = new Node(element)
-    if (index === 0){
+    if (index === 0) {
       node.next = head
       head = node
       length++;
       return
     }
     let parentNode = null
-    let currentIndex = 0 
+    let currentIndex = 0
     let currentNode = head
     let isFound = false
-    while(!isFound && currentNode){
-      if(index === currentIndex){
+    while (!isFound && currentNode) {
+      if (index === currentIndex) {
         parentNode.next = node
         node.next = currentNode
         isFound = true
@@ -304,20 +304,20 @@ function LinkedList() {
 //Doubled Linked List
 /////////////
 
-var Node = function(data, prev) {
+var Node = function (data, prev) {
   this.data = data;
   this.prev = prev;
   this.next = null;
 };
-var DoublyLinkedList = function() {
+var DoublyLinkedList = function () {
   this.head = null;
   this.tail = null;
   this.length = 0;
   // Only change code below this line
-  this.add = function(element){
-    let newNode 
-    if(this.head === null){
-      newNode = new Node(element,null)
+  this.add = function (element) {
+    let newNode
+    if (this.head === null) {
+      newNode = new Node(element, null)
       this.head = newNode
       this.tail = newNode
       this.length++
@@ -330,14 +330,14 @@ var DoublyLinkedList = function() {
     return newNode
   }
 
-  this.remove = function(element){
-    if(this.length === 0) return null
-    if(this.head.data === element){
+  this.remove = function (element) {
+    if (this.length === 0) return null
+    if (this.head.data === element) {
       this.head = this.head.next
       this.length--;
       return
     }
-    if(this.tail.data === element){
+    if (this.tail.data === element) {
       let parentTail = this.tail.prev
       parentTail.next = null
       this.tail = parentTail
@@ -345,8 +345,8 @@ var DoublyLinkedList = function() {
       return
     }
     let current = this.head
-    while(current !== null){
-      if(current.data === element) break
+    while (current !== null) {
+      if (current.data === element) break
       current = current.next
     }
     if (current === null) return null
@@ -377,22 +377,22 @@ function Node(value) {
 function BinarySearchTree() {
   this.root = null;
   // Only change code below this line
-  this.add = function(val){
+  this.add = function (val) {
     const newNode = new Node(val)
-    if(this.root === null){ 
+    if (this.root === null) {
       this.root = newNode
       return undefined
     }
     let placeFound = false
     let currentBranch = this.root
-    while(!placeFound){
-      if(currentBranch.value === val) return null
-      if(currentBranch.left === null && val <= currentBranch.value){
+    while (!placeFound) {
+      if (currentBranch.value === val) return null
+      if (currentBranch.left === null && val <= currentBranch.value) {
         currentBranch.left = newNode
         placeFound = true
         break
       }
-      if(currentBranch.right === null && val >= currentBranch.value){
+      if (currentBranch.right === null && val >= currentBranch.value) {
         currentBranch.right = newNode
         placeFound = true
         break
@@ -401,26 +401,26 @@ function BinarySearchTree() {
     }
     return undefined
   }
-  
-  this.findMax = function(){
-    if(this.root === null) return null
+
+  this.findMax = function () {
+    if (this.root === null) return null
     let maxVal = this.root.value
     let currentNode = this.root
-    while(currentNode){
-      if(currentNode.right){
+    while (currentNode) {
+      if (currentNode.right) {
         maxVal = currentNode.right
       }
       currentNode = currentNode.right
     }
     return maxVal.value
   }
-  
-  this.findMin = function(){
-    if(this.root === null) return null
+
+  this.findMin = function () {
+    if (this.root === null) return null
     let minVal = this.root.value
     let currentNode = this.root
-    while(currentNode){
-      if(currentNode.left){
+    while (currentNode) {
+      if (currentNode.left) {
         minVal = currentNode.left
       }
       currentNode = currentNode.left
@@ -428,55 +428,55 @@ function BinarySearchTree() {
     return minVal.value
   }
   // Only change code above this line
-  
-  this.findHeight = function(){
+
+  this.findHeight = function () {
     let height = [-1]
     let minHeight = null
     let maxHeight = null
     const checkHeight = (node) => {
       const lastHeight = height[height.length - 1]
       if (node === null) {
-        if(minHeight === null || (lastHeight + 1)  <= minHeight){
+        if (minHeight === null || (lastHeight + 1) <= minHeight) {
           minHeight = (lastHeight + 1)
         }
-        if(maxHeight === null || (lastHeight + 1) >= maxHeight){
+        if (maxHeight === null || (lastHeight + 1) >= maxHeight) {
           maxHeight = (lastHeight + 1)
         }
         return
-      } 
-      if(node.left || node.right){
+      }
+      if (node.left || node.right) {
         height.push(lastHeight + 1);
       }
       checkHeight(node.left)
-      checkHeight(node.right) 
+      checkHeight(node.right)
     }
     checkHeight(this.root)
-    return {height, minHeight, maxHeight}
+    return { height, minHeight, maxHeight }
   }
-  
-  this.findMinHeight = function(){
-    if(this.root === null) return -1
-    const {minHeight} = this.findHeight()
+
+  this.findMinHeight = function () {
+    if (this.root === null) return -1
+    const { minHeight } = this.findHeight()
     return minHeight
   }
 
-  this.findMaxHeight = function(){
-    if(this.root === null) return -1
-    const {maxHeight} = this.findHeight()
+  this.findMaxHeight = function () {
+    if (this.root === null) return -1
+    const { maxHeight } = this.findHeight()
     return maxHeight
   }
-  
-  this.isBalanced = function(){
-    if(this.root === null) return false
-    const {minHeight, maxHeight} = this.findHeight()
-    if(maxHeight - minHeight >1) return false
+
+  this.isBalanced = function () {
+    if (this.root === null) return false
+    const { minHeight, maxHeight } = this.findHeight()
+    if (maxHeight - minHeight > 1) return false
     return true
   }
-  
-  this.inorder  = function(){
-    if(this.root === null) return null
+
+  this.inorder = function () {
+    if (this.root === null) return null
     let values = []
-    function getNodeValue(node){
+    function getNodeValue(node) {
       if (node === null) return
       getNodeValue(node.left) //left
       values.push(node.value) // root
@@ -486,11 +486,11 @@ function BinarySearchTree() {
     console.log("values: ", values)
     return values
   }
-  
-  this.preorder  = function(){
-    if(this.root === null) return null
+
+  this.preorder = function () {
+    if (this.root === null) return null
     let values = []
-    function getNodeValue(node){
+    function getNodeValue(node) {
       if (node === null) return
       values.push(node.value) // root
       getNodeValue(node.left) //left
@@ -500,10 +500,10 @@ function BinarySearchTree() {
     console.log("values: ", values)
     return values
   }
- this.postorder  = function(){
-    if(this.root === null) return null
+  this.postorder = function () {
+    if (this.root === null) return null
     let values = []
-    function getNodeValue(node){
+    function getNodeValue(node) {
       if (node === null) return
       getNodeValue(node.left) //left
       getNodeValue(node.right) // right
@@ -513,7 +513,7 @@ function BinarySearchTree() {
     console.log("values: ", values)
     return values
   }
-  
+
   ///to traverse root by levels: 
   function traverse(direction, root) {
     const queue = [root];
@@ -541,21 +541,21 @@ function BinarySearchTree() {
   }
 
   // Level order traversal
-  this.levelOrder = function() {
+  this.levelOrder = function () {
     if (!this.root) return null;
 
     return traverse("level", this.root);
   }
 
   // Reverse level order traversal
-  this.reverseLevelOrder = function() {
+  this.reverseLevelOrder = function () {
     if (!this.root) return null;
 
     return traverse("reverseLevel", this.root);
   }
-  
+
   //to delete element in the tree
-  this.remove = function(value) {
+  this.remove = function (value) {
     if (!this.root) return null;
 
     // find the node
@@ -577,20 +577,43 @@ function BinarySearchTree() {
       this.root = null;
     } else {
       // -- other node
-      const direction = parent.left === target ? "left" : "right";
-      parent[direction] = null;
+      let children = (target.left !== null ? 1 : 0) + (target.right !== null ? 1 : 0);
+
+      if (children === 0) {
+        if (target == this.root) {
+          this.root = null;
+        } else {
+          if (parent.left == target) {
+            parent.left = null;
+          } else {
+            parent.right = null;
+          }
+        }
+      }
+      if (children === 1) {
+        if (target == this.root) {
+          this.root = target.left !== null ? target.left : target.right
+        } else {
+          if (parent.left === target) {
+            parent.left = target.left !== null ? target.left : target.right
+          }
+          if (parent.right === target) {
+            parent.right = target.right !== null ? target.right : target.left
+          }
+        }
+      }
     }
   }
-  
+
 }
 
 function isBinarySearchTree(tree) {
   // Only change code below this line
   function isBinarySubTree(node) {
     return !node /* empty subtree is always valid */
-    || (
+      || (
         /* child values must be in order */
-        (!node.left  || node.left.value   < node.value) &&
+        (!node.left || node.left.value < node.value) &&
         (!node.right || node.right.value >= node.value) &&
         /* and child subtrees must be valid */
         isBinarySubTree(node.left) && isBinarySubTree(node.right)
@@ -608,8 +631,8 @@ function isBinarySearchTree(tree) {
   // Only change code below this line
   const isValidNode = (node) => {
     if (node === null) return true
-    if ((node.left !== null && node.left.value >= node.value) || (node.right !== null && node.right.value < node.value) ) return false
-    if (isValidNode(node.left) && isValidNode(node.right)){
+    if ((node.left !== null && node.left.value >= node.value) || (node.right !== null && node.right.value < node.value)) return false
+    if (isValidNode(node.left) && isValidNode(node.right)) {
       return true
     }
     return false
