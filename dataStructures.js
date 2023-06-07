@@ -574,6 +574,14 @@ function BinarySearchTree() {
     if (!node) return null;
     return node.right ? this.findMax(node.right) : node.value;
   }
+  
+  this.invert = function(node = this.root) {
+    if (!node) return null;
+
+    [node.left, node.right] = [node.right, node.left];
+    this.invert(node.left);
+    this.invert(node.right);
+  }
 
 }
 
