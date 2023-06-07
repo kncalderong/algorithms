@@ -402,33 +402,6 @@ function BinarySearchTree() {
     return undefined
   }
 
-  this.findMax = function () {
-    if (this.root === null) return null
-    let maxVal = this.root.value
-    let currentNode = this.root
-    while (currentNode) {
-      if (currentNode.right) {
-        maxVal = currentNode.right
-      }
-      currentNode = currentNode.right
-    }
-    return maxVal.value
-  }
-
-  this.findMin = function () {
-    if (this.root === null) return null
-    let minVal = this.root.value
-    let currentNode = this.root
-    while (currentNode) {
-      if (currentNode.left) {
-        minVal = currentNode.left
-      }
-      currentNode = currentNode.left
-    }
-    return minVal.value
-  }
-  // Only change code above this line
-
   this.findHeight = function () {
     let height = [-1]
     let minHeight = null
@@ -555,7 +528,7 @@ function BinarySearchTree() {
   }
 
   //to delete element in the tree
-  this.remove = function (value) {
+  this.remove = function(value) {
     if (!this.root) return null;
 
     // find the node
@@ -572,37 +545,34 @@ function BinarySearchTree() {
     if (!target) return null;
 
     // remove the node
-    // -- root node
-    if (!parent) {
-      this.root = null;
+    // -- zero or one children
+    if (!(target.left && target.right)) {
+      // ---- root node
+      const replacement = target.right ? target.right : target.left;
+      if (!parent) {
+        this.root = replacement;
+      } else {
+        // ---- other node
+        const direction = parent.left === target ? "left" : "right";
+        parent[direction] = replacement;
+      }
     } else {
-      // -- other node
-      let children = (target.left !== null ? 1 : 0) + (target.right !== null ? 1 : 0);
-
-      if (children === 0) {
-        if (target == this.root) {
-          this.root = null;
-        } else {
-          if (parent.left == target) {
-            parent.left = null;
-          } else {
-            parent.right = null;
-          }
-        }
-      }
-      if (children === 1) {
-        if (target == this.root) {
-          this.root = target.left !== null ? target.left : target.right
-        } else {
-          if (parent.left === target) {
-            parent.left = target.left !== null ? target.left : target.right
-          }
-          if (parent.right === target) {
-            parent.right = target.right !== null ? target.right : target.left
-          }
-        }
-      }
+      // -- two children
+      // ---- replace current value with smallest child
+      const newChildValue = this.findMin(target.right);
+      this.remove(newChildValue);
+      target.value = newChildValue;
     }
+  }
+
+  this.findMin = function(node = this.root) {
+    if (!node) return null;
+    return node.left ? this.findMin(node.left) : node.value;
+  }
+
+  this.findMax = function(node = this.root) {
+    if (!node) return null;
+    return node.right ? this.findMax(node.right) : node.value;
   }
 
 }
