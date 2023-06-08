@@ -618,3 +618,87 @@ function isBinarySearchTree(tree) {
   return isValidNode(tree.root)
   // Only change code above this line
 }
+
+
+/////////////
+//Trie search tree
+/////////////
+
+
+var Trie = function () {
+  // Only change code below this line
+  this.root = new Node();
+
+  this.add = (wordParam) => {
+    console.log(wordParam);
+    function addWord(word, root) {
+      if (word) {
+        // console.log(Object.keys(root.keys));
+        if (Object.keys(root.keys).includes(word[0])) { // check if letter is already in node
+          let letter = word[0];
+          addWord(word.substring(1), root.keys[letter]); // if there is the letter then add the remaning word to that node that contained the first letter
+        }
+        else {
+          const node = new Node(); // if letter is not already in the node, then create a new node and include it as root keys[]
+
+          let letter = word[0];
+          root.keys[letter] = node;
+          // console.log("\nroot after adding the key", word[0], ":", root, "\n");
+
+          if (word.length === 1) { // at the end of recursion only one letter will remain, so mark the node as finish of the word
+            node.setEnd();
+          }
+          addWord(word.substring(1), root.keys[letter]);
+        }
+      }
+    }
+
+    addWord(wordParam, this.root);
+    // console.log("Root, finally:\n", this.root);
+  };
+  
+  this.isWord = word => {
+    let root = this.root;
+    while (word) { // while word has letters yet
+      let firstLetter = word[0];
+      if (Object.keys(root.keys).includes(firstLetter)) { //if root keys includes first letter
+        if (word.length === 1) { //if the targetWord is only 1length and root letter continues as a whole word, so return false
+          if (!root.keys[firstLetter].isEnd()) {
+            return false;
+          }
+        }
+        word = word.substring(1); // while word has letters yet
+      } 
+      else { //if current letter is not contained then return false
+        return false;
+      }
+      root = root.keys[firstLetter]; //change of "root" to update the current node
+    }
+    return true;
+  };
+  
+  this.print = () => {
+    const words = [];
+
+    function reTRIEve(root, word) {
+      // console.log(Object.keys(root.keys).length);
+      if (Object.keys(root.keys).length != 0) {
+        for (let letter of Object.keys(root.keys)) {
+          reTRIEve(root.keys[letter], word.concat(letter)); //recursive to get all letter of one branch concatenated
+        }
+        if (root.isEnd()) { //eventually the node will be marked as end of the word, so can be pushed to the array
+          words.push(word);
+        }
+      }
+      else {
+        word.length > 0 ? words.push(word) : undefined;
+        return;
+      }
+    }
+
+    reTRIEve(this.root, "");
+    console.log(words);
+    return words;
+  };
+  
+}
