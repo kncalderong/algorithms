@@ -702,3 +702,48 @@ var Trie = function () {
   };
   
 }
+
+
+/////////////
+//MaxHeap
+/////////////
+
+
+var MinHeap = function() {
+  // Only change code below this line
+  this.heap = [null];
+  this.insert = (ele) => {
+    var index = this.heap.length;
+    var arr = [...this.heap];
+    arr.push(ele);
+    while (ele < arr[Math.floor(index / 2)] && index > 1) {
+      arr[index] = arr[Math.floor(index / 2)];
+      arr[Math.floor(index / 2)] = ele;
+      index = Math.floor(index / 2); //Correct it to return parent index instead of parent
+    }
+    this.heap = arr;
+  }
+  this.print = () => {
+    return this.heap.slice(1);
+  }
+  this.remove = () =>{
+    let arr = [...this.heap];
+    let min = arr.splice(1,1);
+    this.heap = [null];
+    for(let i = 1; i<arr.length;i++){
+      this.insert(arr[i]);
+    }
+    return min[0];
+  }
+  this.sort = (array) => {
+    let resultArray = []
+    console.log(this.heap)
+    while(this.heap.length > 1){
+      resultArray.push(this.remove())
+    }
+    console.log("resultArray ", resultArray)
+    return resultArray
+  }
+
+  // Only change code above this line
+};
